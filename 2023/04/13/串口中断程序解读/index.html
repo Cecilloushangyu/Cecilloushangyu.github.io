@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang='zh-CN'>
+
+<head>
+  <meta name="generator" content="Hexo 6.3.0">
+  <meta name="hexo-theme" content="https://github.com/xaoxuu/hexo-theme-stellar/tree/1.18.5">
+  <meta charset="utf-8">
+  
+
+  <meta http-equiv='x-dns-prefetch-control' content='on' />
+  <link rel='dns-prefetch' href='https://gcore.jsdelivr.net'>
+  <link rel="preconnect" href="https://gcore.jsdelivr.net" crossorigin>
+  <link rel='dns-prefetch' href='//unpkg.com'>
+
+  <meta name="renderer" content="webkit">
+  <meta name="force-rendering" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <meta name="HandheldFriendly" content="True" >
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="theme-color" content="#f8f8f8">
+  
+  <title>4.串口中断程序解读 - Cecilloushangy's Blog</title>
+
+  
+    <meta name="description" content="IO端口、初始化  123GPIO_InitTypeDef GPIO_InitStructure;&#x2F;&#x2F;GPIO端口USART_InitTypeDef USART_InitStructure;&#x2F;&#x2F;串口NVIC_InitTypeDef NVIC_InitStructure;&#x2F;&#x2F;中断   串口及IO端口时钟使能，STM32F103C8芯片中，串口1的的IO端口是A，同时，需要将串口1使能。  1RCC">
+<meta property="og:type" content="article">
+<meta property="og:title" content="4.串口中断程序解读">
+<meta property="og:url" content="http://example.com/2023/04/13/%E4%B8%B2%E5%8F%A3%E4%B8%AD%E6%96%AD%E7%A8%8B%E5%BA%8F%E8%A7%A3%E8%AF%BB/index.html">
+<meta property="og:site_name" content="Cecilloushangy&#39;s Blog">
+<meta property="og:description" content="IO端口、初始化  123GPIO_InitTypeDef GPIO_InitStructure;&#x2F;&#x2F;GPIO端口USART_InitTypeDef USART_InitStructure;&#x2F;&#x2F;串口NVIC_InitTypeDef NVIC_InitStructure;&#x2F;&#x2F;中断   串口及IO端口时钟使能，STM32F103C8芯片中，串口1的的IO端口是A，同时，需要将串口1使能。  1RCC">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/2023/04/13/%E4%B8%B2%E5%8F%A3%E4%B8%AD%E6%96%AD%E7%A8%8B%E5%BA%8F%E8%A7%A3%E8%AF%BB/a.png">
+<meta property="article:published_time" content="2023-04-13T12:08:54.000Z">
+<meta property="article:modified_time" content="2023-04-13T14:16:28.653Z">
+<meta property="article:author" content="loushangyu">
+<meta property="article:tag" content="STM32">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/2023/04/13/%E4%B8%B2%E5%8F%A3%E4%B8%AD%E6%96%AD%E7%A8%8B%E5%BA%8F%E8%A7%A3%E8%AF%BB/a.png">
+  
+  
+  
+  <meta name="keywords" content="STM32">
+
+  <!-- feed -->
+  
+
+  
+    
+<link rel="stylesheet" href="/css/main.css">
+
+  
+
+  
+
+  
+
+  
+
+
+  
+</head>
+
+<body>
+  
+
+
+
+
+  <div class='l_body' id='start'>
+    <aside class='l_left' layout='post'>
+    
+
+  
+
+<header class="header"><div class="logo-wrap"><a class="title" href="/"><div class="main" ff="title">Cecilloushangy's Blog</div><div class="sub cap">Loushangyu</div></a></div>
+
+<nav class="menu dis-select"></nav>
+</header>
+
+
+<div class="widgets">
+<widget class="widget-wrapper search"><div class="widget-body"><div class="search-wrapper" id="search"><form class="search-form"><input type="text" class="search-input" id="search-input" data-filter="/blog/" placeholder="文章搜索"><svg t="1670596976048" class="icon search-icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2676" width="200" height="200"><path d="M938.2 832.6L723.8 618.1c-2.5-2.5-5.3-4.4-7.9-6.4 36.2-55.6 57.3-121.8 57.3-193.1C773.3 222.8 614.6 64 418.7 64S64 222.8 64 418.6c0 195.9 158.8 354.6 354.6 354.6 71.3 0 137.5-21.2 193.2-57.4 2 2.7 3.9 5.4 6.3 7.8L832.5 938c14.6 14.6 33.7 21.9 52.8 21.9 19.1 0 38.2-7.3 52.8-21.8 29.2-29.1 29.2-76.4 0.1-105.5M418.7 661.3C284.9 661.3 176 552.4 176 418.6 176 284.9 284.9 176 418.7 176c133.8 0 242.6 108.9 242.6 242.7 0 133.7-108.9 242.6-242.6 242.6" p-id="2677"></path></svg></form><div id="search-result"></div><div class="search-no-result">没有找到内容！</div></div></div></widget>
+
+
+
+<widget class="widget-wrapper recent"><div class="widget-header cap theme dis-select"><span class="name">最近更新</span></div><div class="widget-body related-posts fs14"><a class="item title" href="/2023/04/13/%E4%B8%B2%E5%8F%A3%E4%B8%AD%E6%96%AD%E7%A8%8B%E5%BA%8F%E8%A7%A3%E8%AF%BB/"><span class="title">4.串口中断程序解读</span></a><a class="item title" href="/2023/04/13/SysTick%E5%BB%B6%E6%97%B6%E5%87%BD%E6%95%B0/"><span class="title">delay延时函数</span></a><a class="item title" href="/2023/04/12/%E4%BD%8D%E5%B8%A6%E6%93%8D%E4%BD%9C/"><span class="title">位带操作</span></a><a class="item title" href="/2023/04/13/%E5%A6%82%E4%BD%95%E6%9F%A5%E7%9C%8B%E8%87%AA%E5%B7%B1%E4%BD%BF%E7%94%A8%E7%9A%84%E6%9D%BF%E5%AD%90%E7%9A%84%E6%97%B6%E9%92%9F%E9%A2%91%E7%8E%87/"><span class="title">如何查看自己使用的板子的时钟频率</span></a><a class="item title" href="/2023/04/13/%E7%82%B9%E4%BA%AE%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E4%B8%AALED%E5%B0%8F%E7%81%AF/"><span class="title">1. 点亮我的第一个LED小灯</span></a></div></widget>
+
+
+
+
+
+</div>
+
+
+    </aside>
+    <div class='l_main'>
+      
+
+      
+
+
+
+<div class="bread-nav fs12"><div id="breadcrumb"><a class="cap breadcrumb" href="/">主页</a><span class="sep"></span><a class="cap breadcrumb" href="/">文章</a></div><div id="post-meta">发布于&nbsp;<time datetime="2023-04-13T12:08:54.000Z">2023-04-13</time></div></div>
+
+<article class='md-text content post'>
+<h1 class="article-title"><span>4.串口中断程序解读</span></h1>
+<ol>
+<li>IO端口、初始化</li>
+</ol>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">GPIO_InitTypeDef GPIO_InitStructure;<span class="comment">//GPIO端口</span></span><br><span class="line">USART_InitTypeDef USART_InitStructure;<span class="comment">//串口</span></span><br><span class="line">NVIC_InitTypeDef NVIC_InitStructure;<span class="comment">//中断</span></span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>串口及IO端口时钟使能，STM32F103C8芯片中，串口1的的IO端口是A，同时，需要将串口1使能。</li>
+</ol>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">RCC_APB2PeriphClockCmd(RCC_APB2Periph_USART1|RCC_APB2Periph_GPIOA, ENABLE);	</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>IO端口输入输出初始化配置</li>
+</ol>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//USART1_TX   GPIOA.9</span></span><br><span class="line">GPIO_InitStructure.GPIO_Pin = GPIO_Pin_9; <span class="comment">//PA.9</span></span><br><span class="line">GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;</span><br><span class="line">GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF_PP;<span class="comment">//复用推挽输出模式</span></span><br><span class="line">GPIO_Init(GPIOA, &amp;GPIO_InitStructure);<span class="comment">//初始化GPIOA.9</span></span><br><span class="line"><span class="comment">//USART1_RX	  GPIOA.10初始化</span></span><br><span class="line">GPIO_InitStructure.GPIO_Pin = GPIO_Pin_10;<span class="comment">//PA10</span></span><br><span class="line">GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN_FLOATING;<span class="comment">//浮空输入</span></span><br><span class="line">GPIO_Init(GPIOA, &amp;GPIO_InitStructure);<span class="comment">//初始化GPIOA.10  </span></span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>中断优先级配置，此处配置抢占优先级为3，子优先级为3</li>
+</ol>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">NVIC_InitStructure.NVIC_IRQChannel = USART1_IRQn;</span><br><span class="line">NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority=<span class="number">3</span> ;<span class="comment">//转换为抢占优先级3</span></span><br><span class="line">NVIC_InitStructure.NVIC_IRQChannelSubPriority = <span class="number">3</span>;		<span class="comment">//子优先级</span></span><br><span class="line">NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;			<span class="comment">//IRQ通道使能</span></span><br><span class="line">NVIC_Init(&amp;NVIC_InitStructure);	<span class="comment">//根据指定的参数初始化NVIC寄存器</span></span><br></pre></td></tr></table></figure>
+
+<ol start="5">
+<li><p>波特率、数据位数、奇偶校验等模式配置</p>
+<p> USART_InitStructure.USART_BaudRate &#x3D; bound;&#x2F;&#x2F;波特率<br> USART_InitStructure.USART_WordLength &#x3D; USART_WordLength_8b;&#x2F;&#x2F;设置字长为8位数据格式<br> USART_InitStructure.USART_StopBits &#x3D; USART_StopBits_1;&#x2F;&#x2F;一个停止位<br> USART_InitStructure.USART_Parity &#x3D; USART_Parity_No;&#x2F;&#x2F;无奇偶校验<br> USART_InitStructure.USART_HardwareFlowControl &#x3D; USART_HardwareFlowControl_None;&#x2F;&#x2F;无硬件数据流控制<br> USART_InitStructure.USART_Mode &#x3D; USART_Mode_Rx | USART_Mode_Tx;	&#x2F;&#x2F;收发模式</p>
+</li>
+</ol>
+  <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">USART_Init(USART1, &amp;USART_InitStructure); <span class="comment">//初始化串口1</span></span><br><span class="line">USART_ITConfig(USART1, USART_IT_RXNE, ENABLE);<span class="comment">//开启串口接受中断</span></span><br><span class="line">USART_Cmd(USART1, ENABLE);                    <span class="comment">//使能串口1</span></span><br></pre></td></tr></table></figure>
+
+<ol start="6">
+<li>中断服务函数。在串口程序中，没怎么看懂里面的意思，但是需要知道里面相关的函数知识，USART_GetITStatus(USART_TypeDef* USARTx, uint16_t USART_IT)这个函数来判断是不是因为接收到数据而触发中断，如果是由于串口数据的收发引起的中断则会进入到中断函数中</li>
+</ol>
+<p><code>首先强调一点0x0d和0x0a在ASCII码表里面表示\r和\n，分别表示回车和换行</code></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">USART1_IRQHandler</span><span class="params">(<span class="type">void</span>)</span>                	<span class="comment">//串口1中断服务程序</span></span><br><span class="line">	&#123;</span><br><span class="line">	u8 Res;</span><br><span class="line">	<span class="keyword">if</span>(USART_GetITStatus(USART1, USART_IT_RXNE) != RESET)  <span class="comment">//接收中断（接收道德数据必须是0x0d 0x0a结尾）</span></span><br><span class="line">		&#123;</span><br><span class="line">		Res =USART_ReceiveData(USART1);	<span class="comment">//读取接收到的数据</span></span><br><span class="line">		</span><br><span class="line">		<span class="keyword">if</span>((USART_RX_STA&amp;<span class="number">0x8000</span>)==<span class="number">0</span>)<span class="comment">//接收未完成</span></span><br><span class="line">			&#123;</span><br><span class="line">			<span class="keyword">if</span>(USART_RX_STA&amp;<span class="number">0x4000</span>)<span class="comment">//接收到了0x0d</span></span><br><span class="line">				&#123;</span><br><span class="line">				<span class="keyword">if</span>(Res!=<span class="number">0x0a</span>)USART_RX_STA=<span class="number">0</span>;<span class="comment">//接收错误，重新开始</span></span><br><span class="line">				<span class="keyword">else</span> USART_RX_STA|=<span class="number">0x8000</span>;	<span class="comment">//接收完成了</span></span><br><span class="line">				&#125;</span><br><span class="line">			<span class="keyword">else</span><span class="comment">//还没有接收到0x0D</span></span><br><span class="line">				&#123;	</span><br><span class="line">				<span class="keyword">if</span>(Res==<span class="number">0x0d</span>)USART_RX_STA|=<span class="number">0x4000</span>;</span><br><span class="line">				<span class="keyword">else</span></span><br><span class="line">					&#123;</span><br><span class="line">					USART_RX_BUF[USART_RX_STA&amp;<span class="number">0X3FFF</span>]=Res ;</span><br><span class="line">					USART_RX_STA++;</span><br><span class="line">					<span class="keyword">if</span>(USART_RX_STA&gt;(USART_REC_LEN<span class="number">-1</span>))USART_RX_STA=<span class="number">0</span>;<span class="comment">//接收数据错误， 重新开始接收 </span></span><br><span class="line">					&#125;		 </span><br><span class="line">				&#125;</span><br><span class="line">			&#125;   		 </span><br><span class="line">     &#125; </span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
+<p>根据<a target="_blank" rel="noopener" href="http://t.csdn.cn/dXaFm">CSDN一位博主</a>的描述：“这段代码是定义了一个协议，你所向单片机发送的字符必须以“&#x2F;r&#x2F;n”结尾（关于&#x2F;r和&#x2F;n，文章最后有补充说明），然后在中断函数里面通过判断\r和\n的ascll值使定义的 USART1_RX_STA 这个“状态寄存器”的相应位置1，然后在主函数里面判断 USART1_RX_STA这个“状态寄存器”的标志位的值，来发送数据。”</p>
+<p>这位博主写的真的很好，这里我直接复制粘贴了。</p>
+<p>先说说这段代码的整体设计思路，这段代码是定义了一个协议，你所向单片机发送的字符必须以“&#x2F;r&#x2F;n”结尾（关于&#x2F;r和&#x2F;n，文章最后有补充说明），然后在中断函数里面通过判断\r和\n的ascll值使定义的 USART1_RX_STA 这个“状态寄存器”的相应位置1，然后在主函数里面判断 USART1_RX_STA这个“状态寄存器”的标志位的值，来发送数据。</p>
+<p>看完之后是不是觉得很神奇，USART1_RX_STA明明是定义的一个变量，怎么就变成“寄存器了”，这就是设计师奇妙的设计，定义的USART1_RX_STA是两个字节的变量，有16个位可以用，但是我们的最大接收字节只要200个，就算有1000个字节我们也用不到2的15次方的大小，字节再多stm32就没这么大的存储空间了，所以200个字节已经足够我们一次接收的数据了。显然16个位我们是用不完的，所以我们可以把USART1_RX_STA的高位设置成状态标志位，低位用来计数。如图所示</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="/2023/04/13/%E4%B8%B2%E5%8F%A3%E4%B8%AD%E6%96%AD%E7%A8%8B%E5%BA%8F%E8%A7%A3%E8%AF%BB/a.png"></p>
+<p>图中可以看到，0-13位用来记录字符的长度，高两位作为状态标志位。<br>下面开始正式讲解代码。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">USART1_IRQHandler</span><span class="params">(<span class="type">void</span>)</span>                	<span class="comment">//串口1中断服务程序</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="number">1</span>	u8 r;</span><br><span class="line"><span class="number">2</span>	<span class="keyword">if</span>(USART_GetITStatus(USART1, USART_IT_RXNE) != RESET)  <span class="comment">//接收中断</span></span><br><span class="line"><span class="number">3</span>	&#123;</span><br><span class="line"><span class="number">4</span>		r =USART_ReceiveData(USART1);<span class="comment">//(USART1-&gt;DR);	//读取接收到的数据</span></span><br><span class="line"><span class="number">5</span>		<span class="keyword">if</span>((USART1_RX_STA&amp;<span class="number">0x8000</span>)==<span class="number">0</span>)<span class="comment">//接收未完成</span></span><br><span class="line"><span class="number">6</span>		&#123;</span><br><span class="line"><span class="number">7</span>			<span class="keyword">if</span>(USART1_RX_STA&amp;<span class="number">0x4000</span>)<span class="comment">//接收到了0x0d</span></span><br><span class="line"><span class="number">8</span>			&#123;</span><br><span class="line"><span class="number">9</span>				<span class="keyword">if</span>(r!=<span class="number">0x0a</span>)USART1_RX_STA=<span class="number">0</span>;<span class="comment">//接收错误,重新开始</span></span><br><span class="line"><span class="number">10</span>				<span class="keyword">else</span> USART1_RX_STA|=<span class="number">0x8000</span>;	<span class="comment">//接收完成了 </span></span><br><span class="line"><span class="number">11</span>			&#125;</span><br><span class="line"><span class="number">12</span>			<span class="keyword">else</span> <span class="comment">//接收到0X0D之前或0x0D</span></span><br><span class="line"><span class="number">13</span>			&#123;	</span><br><span class="line"><span class="number">14</span>				<span class="keyword">if</span>(r==<span class="number">0x0d</span>)USART1_RX_STA|=<span class="number">0x4000</span>;</span><br><span class="line"><span class="number">15</span>				<span class="keyword">else</span></span><br><span class="line"><span class="number">16</span>				&#123;</span><br><span class="line"><span class="number">17</span>					USART1_RX_BUF[USART1_RX_STA&amp;<span class="number">0X3FFF</span>]=r;</span><br><span class="line"><span class="number">18</span>					USART1_RX_STA++;</span><br><span class="line"><span class="number">19</span>					<span class="keyword">if</span>(USART1_RX_STA&gt;(USART1_REC_LEN<span class="number">-1</span>))USART1_RX_STA=<span class="number">0</span>;<span class="comment">//接收数据错误,重新开始接收	  </span></span><br><span class="line">				&#125;		 </span><br><span class="line">			&#125;</span><br><span class="line">		&#125;   		 </span><br><span class="line">	&#125; </span><br><span class="line">&#125; 	</span><br></pre></td></tr></table></figure>
+
+
+
+<p>1.当接收到数据时，会产生接收中断，进入中断函数，将接收到的数据存入变量r中，注意，r只占一个字节。</p>
+<p>2.代码第5行，判断最高位的状态，USART1_RX_STA最高位是接收到\n(0x0a),才会置1的状态标志位，当它置1时，标志着整个数据已经接收完毕，main中就是判断这个位是否为1来进行发送数据的。很显然，能够进入中断，那说明接收还未完成，所以接下来就是执行第5行下面的代码。</p>
+<p>3.第7行是判断USART1_RX_STA次高位，USART1_RX_STA次高位是否置1，这要取决于是否接收到了倒数第2个字符0x0d。</p>
+<p>如果上一次接收中断接收到了0x0d，就会把次高位置1，代码第7行检测到了USART1_RX_STA次高位置1后，就会进入if里面（执行代码第9或者第10行），判断数据最后一位是否是0x0a(\n)，如果最后一位不是0x0a，那说明这串字符不是按照程序所定义的协议发送给单片机的，单片机自然也就识别不了，这个数据就会被丢掉（代码第9行），USART1_RX_STA清零（包括里面的记录的数据长度和状态标志位），重新接收新的发送过来的数据；如果最后一位是0x0a，那这个字符串就是按照协议发送给单片机的，程序执行第10行，将USART1_RX_STA的最高位置1，标志这串字符串接收完毕。USART1_RX_STA最高位置1后，main函数中就可以检测它进行操作了。<br>如果上一次接收中断未接收到了0x0d，那么USART1_RX_STA次高位就不会被置1，在程序走到第7行时，检测到USART1_RX_STA次高位为0，程序就会执行第12行的else。<br>4.程序第12行的else中，要判断接收到的数据是0x0d还是0x0d之前的数据。</p>
+<p>如果这个数据是0x0d，那么就将USART1_RX_STA次高位置1，在下一次进入接收中断时，就会执行上述3中的步骤了，程序第7行就能够检测到USART1_RX_STA次高位的状态了。<br>如果这个数据是0x0d之前的数据，就执行17-19行代码，这三行代码的作用是将这个字节存入USART1_RX_BUF[USART1_REC_LEN]数组（头文件中定义过了）中，记录字符的长度，判断字符长度是否发生溢出（最大200字节）。<br>USART1_RX_BUF[USART1_RX_STA&amp;0X3FFF]&#x3D;r;说明一下这行代码中的USART1_RX_STA&amp;0X3FFF，USART1_RX_STA的0-13位时用来记录数据长度的，这句话的意思就是去掉了USART1_RX_STA中的高两位状态位，剩下的数据与数组的值相对应。<br>5.看了上面4点解释脑子里是不是还是很乱，这也就是这段代码难的地方，不能够顺序的去看这个代码，不然还是理不清逻辑，这个串口中断，就相当于一个循环，要判断到接收数据完毕了才会结束这个循环，怎么判断结束是否完毕呢？就看USART1_RX_STA的高两位的状态。下面再来屡屡逻辑。</p>
+<p>[0] 来了一串数据，假设有50个字符，占50个字节，再加上协议定义的结尾\r\n，一共是52个字节。</p>
+<p>[1] 当接收到0x0d(\r,也是第51个字符)之前的字符，串口中断函数执行的过程是前4行执行完，第5行条件成立进入if，执行到第7行时，条件不成立，转至12行，此时14行进行判断，这个字符不是0x0d，条件不成立，执行17-19行，将数据存入数组中。</p>
+<p>[2] 当0x0d前面的数据接收完时，下一个到来的字符是0x0d(\r)时，此时USART1_RX_STA的最高位和次高位都还是0，程序执行到第7行时，条件依然不会成立，程序会跳转置12行的else，此时程序14行的判断成立，会将USART1_RX_STA的次高位置1，然后结束这次中断。</p>
+<p>[3] 接着上面的步骤，0x0d过了是最后一个字符0x0a(\n)，当接收到这个字符时，第5行条件成立，进入if，执行到程序第7行时，由于上一步接收到了0x0d，已经把USART1_RX_STA的次高位置1了，程序就进入if，执行8-11行的代码，判断是否是0x0a，如果不是，执行程序第9行，如果是，执行第10行，将USART1_RX_STA最高位置1，此时整个数据接收就完成了，剩下的交给主函数处理了。</p>
+<p>接下来是主函数的处理程序了，把这个串口中断函数理解清楚了，主函数也就好理解了。<br>版权声明：本文为CSDN博主「轻染QAQ」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_47586883/article/details/110959012">https://blog.csdn.net/weixin_47586883/article/details/110959012</a></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">	u16 t=<span class="number">0</span>;</span><br><span class="line">	u16 len=<span class="number">0</span>;</span><br><span class="line">	</span><br><span class="line">	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_2);  <span class="comment">//中断优先级分组 分2组</span></span><br><span class="line">	USART1_Init(<span class="number">115200</span>);</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">while</span>(<span class="number">1</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">if</span>(USART1_RX_STA&amp;<span class="number">0x8000</span>)</span><br><span class="line">		&#123;					   </span><br><span class="line">			len=USART1_RX_STA&amp;<span class="number">0x3fff</span>;<span class="comment">//得到此次接收到的数据长度</span></span><br><span class="line">			<span class="keyword">for</span>(t=<span class="number">0</span>;t&lt;len;t++)</span><br><span class="line">			&#123;</span><br><span class="line">				USART_SendData(USART1, USART1_RX_BUF[t]);         <span class="comment">//向串口1发送数据</span></span><br><span class="line">				<span class="keyword">while</span>(USART_GetFlagStatus(USART1,USART_FLAG_TC)!=SET);<span class="comment">//等待发送结束</span></span><br><span class="line">			&#125;</span><br><span class="line">			USART1_RX_STA=<span class="number">0</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>主函数while里面，首先判断USART1_RX_STA的最高位，看数据是否接收完毕，再进行操作。</li>
+<li>len是记下的数据长度，用于for循环中数据发送的次数（因为每次只能发送一个字节）。</li>
+<li>for循环中的while是用的串口发送完成的标志位来判断的是否发送完毕。</li>
+<li>最后一定要把USART1_RX_STA置0，方便下次的数据接收，这很重要！！！</li>
+</ol>
+<p>版权声明：本文为CSDN博主「轻染QAQ」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_47586883/article/details/110959012">https://blog.csdn.net/weixin_47586883/article/details/110959012</a></p>
+<p>补充，关于\r和\n</p>
+<p>回车 \r 本义是光标重新回到本行开头，r的英文return，控制字符可以写成CR，即Carriage Return。ASCII码13(0x0d)。<br>换行 \n 本义是光标往下一行（不一定到下一行行首），n的英文newline，控制字符可以写成LF，即Line Feed。ASCII码10(0x0a)。<br>Windows系统中，我们键盘上的enter键，按下就是\r\n。所以也是为什么要在串口中定义这个协议。当输入一串字符之后按下回车键，点击发送，可以在右边的框中看到最后两个字符的十六进制码是0x0d和0x0a。</p>
+<p>版权声明：本文为CSDN博主「轻染QAQ」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_47586883/article/details/110959012">https://blog.csdn.net/weixin_47586883/article/details/110959012</a></p>
+<p><strong>参考文章：</strong></p>
+<p>《STM32不完全手册_库函数版本_V3.3》</p>
+<p><a target="_blank" rel="noopener" href="http://t.csdn.cn/dXaFm">http://t.csdn.cn/dXaFm</a></p>
+
+
+<div class="article-footer reveal fs14"><section id="license"><div class="header"><span>许可协议</span></div><div class="body"><p>本文采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">署名-非商业性使用-相同方式共享 4.0 国际</a> 许可协议，转载请注明出处。</p>
+</div></section></div>
+
+</article>
+
+<div class="related-wrap reveal" id="read-next"><section class="body"><div class="item" id="prev"></div><div class="item" id="next"><div class="note">较早文章</div><a href="/2023/04/13/%E4%B8%B2%E5%8F%A3%E9%80%9A%E4%BF%A1/">3.串口通信初理解</a></div></section></div>
+
+
+
+
+
+
+
+
+      
+<footer class="page-footer reveal fs12"><hr><div class="text"><p>本站由 <a href="/">@anonymity</a> 使用 <a target="_blank" rel="noopener" href="https://github.com/xaoxuu/hexo-theme-stellar">Stellar</a> 主题创建。<br>本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议，转载请注明出处。</p>
+</div></footer>
+
+      <div class='float-panel mobile-only blur' style='display:none'>
+  <button type='button' class='sidebar-toggle mobile' onclick='sidebar.toggle()'>
+    <svg class="icon" style="width: 1em; height: 1em;vertical-align: middle;fill: currentColor;overflow: hidden;" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="15301"><path d="M566.407 808.3c26.9-0.1 49.3-20.8 51.6-47.6-1.9-27.7-23.9-49.7-51.6-51.6h-412.6c-28.2-1.4-52.6 19.5-55.5 47.6 2.3 26.8 24.6 47.5 51.6 47.6h416.5v4z m309.3-249.9c26.9-0.1 49.3-20.8 51.6-47.6-2.2-26.8-24.6-47.5-51.6-47.6h-721.9c-27.7-2.8-52.5 17.4-55.3 45.1-0.1 0.8-0.1 1.7-0.2 2.5 0.9 27.2 23.6 48.5 50.7 47.6H875.707z m-103.1-245.9c26.9-0.1 49.3-20.8 51.6-47.6-0.4-28.3-23.2-51.1-51.5-51.6h-618.9c-29.5-1.1-54.3 21.9-55.5 51.4v0.2c1.4 27.8 25.2 49.2 53 47.8 0.8 0 1.7-0.1 2.5-0.2h618.8z" p-id="15302"></path><path d="M566.407 808.3c26.9-0.1 49.3-20.8 51.6-47.6-1.9-27.7-23.9-49.7-51.6-51.6h-412.6c-28.2-1.4-52.6 19.5-55.5 47.6 1.9 27.7 23.9 49.7 51.6 51.6h416.5z m309.3-249.9c26.9-0.1 49.3-20.8 51.6-47.6-2.2-26.8-24.6-47.5-51.6-47.6h-721.9c-27.7-2.8-52.5 17.4-55.3 45.1-0.1 0.8-0.1 1.7-0.2 2.5 0.9 27.2 23.6 48.5 50.7 47.6H875.707z m-103.1-245.9c26.9-0.1 49.3-20.8 51.6-47.6-0.4-28.3-23.2-51.1-51.5-51.6h-618.9c-29.5-1.1-54.3 21.9-55.5 51.4v0.2c1.4 27.8 25.2 49.2 53 47.8 0.8 0 1.7-0.1 2.5-0.2h618.8z" p-id="15303"></path></svg>
+  </button>
+</div>
+
+    </div>
+  </div>
+  <div class='scripts'>
+    <script type="text/javascript">
+  const stellar = {
+    // 懒加载 css https://github.com/filamentgroup/loadCSS
+    loadCSS: (href, before, media, attributes) => {
+      var doc = window.document;
+      var ss = doc.createElement("link");
+      var ref;
+      if (before) {
+        ref = before;
+      } else {
+        var refs = (doc.body || doc.getElementsByTagName("head")[0]).childNodes;
+        ref = refs[refs.length - 1];
+      }
+      var sheets = doc.styleSheets;
+      if (attributes) {
+        for (var attributeName in attributes) {
+          if (attributes.hasOwnProperty(attributeName)) {
+            ss.setAttribute(attributeName, attributes[attributeName]);
+          }
+        }
+      }
+      ss.rel = "stylesheet";
+      ss.href = href;
+      ss.media = "only x";
+      function ready(cb) {
+        if (doc.body) {
+          return cb();
+        }
+        setTimeout(function () {
+          ready(cb);
+        });
+      }
+      ready(function () {
+        ref.parentNode.insertBefore(ss, before ? ref : ref.nextSibling);
+      });
+      var onloadcssdefined = function (cb) {
+        var resolvedHref = ss.href;
+        var i = sheets.length;
+        while (i--) {
+          if (sheets[i].href === resolvedHref) {
+            return cb();
+          }
+        }
+        setTimeout(function () {
+          onloadcssdefined(cb);
+        });
+      };
+      function loadCB() {
+        if (ss.addEventListener) {
+          ss.removeEventListener("load", loadCB);
+        }
+        ss.media = media || "all";
+      }
+      if (ss.addEventListener) {
+        ss.addEventListener("load", loadCB);
+      }
+      ss.onloadcssdefined = onloadcssdefined;
+      onloadcssdefined(loadCB);
+      return ss;
+    },
+
+    // 从 butterfly 和 volantis 获得灵感
+    loadScript: (src, opt) => new Promise((resolve, reject) => {
+      var script = document.createElement('script');
+      if (src.startsWith('/')){
+        src = stellar.config.root + src.substring(1);
+      }
+      script.src = src;
+      if (opt) {
+        for (let key of Object.keys(opt)) {
+          script[key] = opt[key]
+        }
+      } else {
+        // 默认异步，如果需要同步，第二个参数传入 {} 即可
+        script.async = true
+      }
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    }),
+
+    // https://github.com/jerryc127/hexo-theme-butterfly
+    jQuery: (fn) => {
+      if (typeof jQuery === 'undefined') {
+        stellar.loadScript(stellar.plugins.jQuery).then(fn)
+      } else {
+        fn()
+      }
+    }
+  };
+  stellar.version = '1.18.5';
+  stellar.github = 'https://github.com/xaoxuu/hexo-theme-stellar/tree/1.18.5';
+  stellar.config = {
+    date_suffix: {
+      just: '刚刚',
+      min: '分钟前',
+      hour: '小时前',
+      day: '天前',
+      month: '个月前',
+    },
+    root : '/',
+  };
+
+  // required plugins (only load if needs)
+  stellar.plugins = {
+    jQuery: 'https://gcore.jsdelivr.net/npm/jquery@3.6.2/dist/jquery.min.js'
+  };
+
+  if ('local_search') {
+    stellar.search = {};
+    stellar.search.service = 'local_search';
+    if (stellar.search.service == 'local_search') {
+      let service_obj = Object.assign({}, {"field":"all","path":"/search.json","content":true,"sort":"-date"});
+      stellar.search[stellar.search.service] = service_obj;
+    }
+  }
+
+  // stellar js
+  stellar.plugins.stellar = Object.assign({"sites":"/js/plugins/sites.js","friends":"/js/plugins/friends.js","ghinfo":"/js/plugins/ghinfo.js","timeline":"/js/plugins/timeline.js","linkcard":"/js/plugins/linkcard.js","fcircle":"/js/plugins/fcircle.js","weibo":"/js/plugins/weibo.js"});
+
+  stellar.plugins.marked = Object.assign("https://cdn.bootcdn.net/ajax/libs/marked/4.0.18/marked.min.js");
+  // optional plugins
+  if ('true' == 'true') {
+    stellar.plugins.lazyload = Object.assign({"enable":true,"js":"https://gcore.jsdelivr.net/npm/vanilla-lazyload@17.8.3/dist/lazyload.min.js","transition":"blur"});
+  }
+  if ('true' == 'true') {
+    stellar.plugins.swiper = Object.assign({"enable":true,"css":"https://unpkg.com/swiper@8.4.5/swiper-bundle.min.css","js":"https://unpkg.com/swiper@8.4.5/swiper-bundle.min.js"});
+  }
+  if ('' == 'true') {
+    stellar.plugins.scrollreveal = Object.assign({"enable":null,"js":"https://gcore.jsdelivr.net/npm/scrollreveal@4.0.9/dist/scrollreveal.min.js","distance":"8px","duration":500,"interval":100,"scale":1});
+  }
+  if ('true' == 'true') {
+    stellar.plugins.preload = Object.assign({"enable":true,"service":"flying_pages","instant_page":"https://gcore.jsdelivr.net/gh/volantis-x/cdn-volantis@4.1.2/js/instant_page.js","flying_pages":"https://gcore.jsdelivr.net/gh/gijo-varghese/flying-pages@2.1.2/flying-pages.min.js"});
+  }
+  if ('true' == 'true') {
+    stellar.plugins.fancybox = Object.assign({"enable":true,"js":"https://gcore.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.umd.js","css":"https://gcore.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.css","selector":".swiper-slide img"});
+  }
+  if ('false' == 'true') {
+    stellar.plugins.heti = Object.assign({"enable":false,"css":"https://unpkg.com/heti@0.9.2/umd/heti.min.css","js":"https://unpkg.com/heti@0.9.2/umd/heti-addon.min.js"});
+  }
+</script>
+
+<!-- required -->
+
+  
+<script src="/js/main.js" async></script>
+
+
+
+<!-- optional -->
+
+
+
+<!-- inject -->
+
+
+  </div>
+</body>
+</html>
