@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang='zh-CN'>
+
+<head>
+  <meta name="generator" content="Hexo 6.3.0">
+  <meta name="hexo-theme" content="https://github.com/xaoxuu/hexo-theme-stellar/tree/1.18.5">
+  <meta charset="utf-8">
+  
+
+  <meta http-equiv='x-dns-prefetch-control' content='on' />
+  <link rel='dns-prefetch' href='https://gcore.jsdelivr.net'>
+  <link rel="preconnect" href="https://gcore.jsdelivr.net" crossorigin>
+  <link rel='dns-prefetch' href='//unpkg.com'>
+
+  <meta name="renderer" content="webkit">
+  <meta name="force-rendering" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <meta name="HandheldFriendly" content="True" >
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="theme-color" content="#f8f8f8">
+  
+  <title>3.串口通信 - Cecilloushangy's Blog</title>
+
+  
+    <meta name="description" content="3. 串口通信串口通信有一下几个步骤  串口时钟使能，GPIO 时钟使能  串口复位  GPIO端口模式设置  串口参数初始化  开启中断并且初始化NVIC（若是中断开发需要设置）  使能串口  编写中断处理函数   相关函数 串口时钟使能，GPIO 时钟使能  1RCC_APB2PeriphClockCmd(RCC_APB2Periph_USART1)；   串口复位。当外设出现异常的时复位设置">
+<meta property="og:type" content="article">
+<meta property="og:title" content="3.串口通信">
+<meta property="og:url" content="http://example.com/2023/04/13/%E4%B8%B2%E5%8F%A3%E9%80%9A%E4%BF%A1/index.html">
+<meta property="og:site_name" content="Cecilloushangy&#39;s Blog">
+<meta property="og:description" content="3. 串口通信串口通信有一下几个步骤  串口时钟使能，GPIO 时钟使能  串口复位  GPIO端口模式设置  串口参数初始化  开启中断并且初始化NVIC（若是中断开发需要设置）  使能串口  编写中断处理函数   相关函数 串口时钟使能，GPIO 时钟使能  1RCC_APB2PeriphClockCmd(RCC_APB2Periph_USART1)；   串口复位。当外设出现异常的时复位设置">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/2023/04/13/%E4%B8%B2%E5%8F%A3%E9%80%9A%E4%BF%A1/a.png">
+<meta property="article:published_time" content="2023-04-13T08:57:31.000Z">
+<meta property="article:modified_time" content="2023-04-13T09:21:10.218Z">
+<meta property="article:author" content="loushangyu">
+<meta property="article:tag" content="STM32">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/2023/04/13/%E4%B8%B2%E5%8F%A3%E9%80%9A%E4%BF%A1/a.png">
+  
+  
+  
+  <meta name="keywords" content="STM32">
+
+  <!-- feed -->
+  
+
+  
+    
+<link rel="stylesheet" href="/css/main.css">
+
+  
+
+  
+
+  
+
+  
+
+
+  
+</head>
+
+<body>
+  
+
+
+
+
+  <div class='l_body' id='start'>
+    <aside class='l_left' layout='post'>
+    
+
+  
+
+<header class="header"><div class="logo-wrap"><a class="title" href="/"><div class="main" ff="title">Cecilloushangy's Blog</div><div class="sub cap">Loushangyu</div></a></div>
+
+<nav class="menu dis-select"></nav>
+</header>
+
+
+<div class="widgets">
+<widget class="widget-wrapper search"><div class="widget-body"><div class="search-wrapper" id="search"><form class="search-form"><input type="text" class="search-input" id="search-input" data-filter="/blog/" placeholder="文章搜索"><svg t="1670596976048" class="icon search-icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2676" width="200" height="200"><path d="M938.2 832.6L723.8 618.1c-2.5-2.5-5.3-4.4-7.9-6.4 36.2-55.6 57.3-121.8 57.3-193.1C773.3 222.8 614.6 64 418.7 64S64 222.8 64 418.6c0 195.9 158.8 354.6 354.6 354.6 71.3 0 137.5-21.2 193.2-57.4 2 2.7 3.9 5.4 6.3 7.8L832.5 938c14.6 14.6 33.7 21.9 52.8 21.9 19.1 0 38.2-7.3 52.8-21.8 29.2-29.1 29.2-76.4 0.1-105.5M418.7 661.3C284.9 661.3 176 552.4 176 418.6 176 284.9 284.9 176 418.7 176c133.8 0 242.6 108.9 242.6 242.7 0 133.7-108.9 242.6-242.6 242.6" p-id="2677"></path></svg></form><div id="search-result"></div><div class="search-no-result">没有找到内容！</div></div></div></widget>
+
+
+<widget class="widget-wrapper toc single" id="data-toc"><div class="widget-header cap dis-select"><span class="name">3.串口通信</span></div><div class="widget-body fs14"><div class="doc-tree active"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%9B%B8%E5%85%B3%E5%87%BD%E6%95%B0"><span class="toc-text">相关函数</span></a></li></ol></div></div></widget>
+
+
+
+
+</div>
+
+
+    </aside>
+    <div class='l_main'>
+      
+
+      
+
+
+
+<div class="bread-nav fs12"><div id="breadcrumb"><a class="cap breadcrumb" href="/">主页</a><span class="sep"></span><a class="cap breadcrumb" href="/">文章</a></div><div id="post-meta">发布于&nbsp;<time datetime="2023-04-13T08:57:31.000Z">2023-04-13</time></div></div>
+
+<article class='md-text content post'>
+<h1 class="article-title"><span>3.串口通信</span></h1>
+<h1 id="3-串口通信"><a href="#3-串口通信" class="headerlink" title="3. 串口通信"></a>3. 串口通信</h1><p>串口通信有一下几个步骤</p>
+<ol>
+<li><p>串口时钟使能，GPIO 时钟使能</p>
+</li>
+<li><p>串口复位</p>
+</li>
+<li><p>GPIO端口模式设置</p>
+</li>
+<li><p>串口参数初始化</p>
+</li>
+<li><p>开启中断并且初始化NVIC（若是中断开发需要设置）</p>
+</li>
+<li><p>使能串口</p>
+</li>
+<li><p>编写中断处理函数</p>
+</li>
+</ol>
+<h2 id="相关函数"><a href="#相关函数" class="headerlink" title="相关函数"></a>相关函数</h2><ol>
+<li><strong>串口时钟使能，GPIO 时钟使能</strong></li>
+</ol>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">RCC_APB2PeriphClockCmd(RCC_APB2Periph_USART1)；</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li><strong>串口复位</strong>。当外设出现异常的时复位设置，实现该外设的复位，然后重新配置 这个外设达到让其重新工作的目的。一般在系统刚开始配置外设的时候，都会先执行复位该外 设的操作。复位的是在函数 <code>USART_DeInit()</code>中完成：</li>
+</ol>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">USART_DeInit</span><span class="params">(USART_TypeDef* USARTx)</span>;<span class="comment">//串口复位</span></span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li><strong>串口参数初始化</strong>，串口初始化是通过 <code>USART_Init()</code>函数实现的。</li>
+</ol>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">USART_Init</span><span class="params">(USART_TypeDef* USARTx, USART_InitTypeDef* USART_InitStruct)</span>；</span><br></pre></td></tr></table></figure>
+
+<p>这个函数得第一个参数是指定的串口标号，而第二个参数是一个USART_InitTypeDef类型得结构体指针，该结构体成员的参数需要进行一定的配置。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">USART_InitStructure.USART_BaudRate = bound; <span class="comment">//波特率;</span></span><br><span class="line">USART_InitStructure.USART_WordLength = USART_WordLength_8b;<span class="comment">//字长为 8 位数据格式</span></span><br><span class="line">USART_InitStructure.USART_StopBits = USART_StopBits_1; <span class="comment">//一个停止位</span></span><br><span class="line">USART_InitStructure.USART_Parity = USART_Parity_No; <span class="comment">//无奇偶校验位</span></span><br><span class="line">USART_InitStructure.USART_HardwareFlowControl= USART_HardwareFlowControl_None; <span class="comment">//无硬件数据流控制</span></span><br><span class="line">USART_InitStructure.USART_Mode = USART_Mode_Rx | USART_Mode_Tx; <span class="comment">//收发模式</span></span><br><span class="line">USART_Init(USART1, &amp;USART_InitStructure); <span class="comment">//初始化串口</span></span><br></pre></td></tr></table></figure>
+
+<p>初始化需要设置的参数为：波特率，字长，停止位，奇偶校验位， 硬件数据流控制，模式（收，发）。</p>
+<ol start="4">
+<li><strong>数据发送与接收</strong>。STM32 的发送与接收是通过数据寄存器 USART_DR 来实现的，这是 一个双寄存器，包含了 TDR 和 RDR。当向该寄存器写数据的时候，串口就会自动发送，当收 到收据的时候，也是存在该寄存器内。</li>
+</ol>
+<p>STM32 库函数操作 USART_DR 寄存器发送数据的函数是：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">USART_SendData</span><span class="params">(USART_TypeDef* USARTx, <span class="type">uint16_t</span> Data)</span>;</span><br></pre></td></tr></table></figure>
+
+<p>通过该函数向串口寄存器 USART_DR 写入一个数据。 </p>
+<p>STM32 库函数操作 USART_DR 寄存器读取串口接收到的数据的函数是：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">uint16_t</span> <span class="title function_">USART_ReceiveData</span><span class="params">(USART_TypeDef* USARTx)</span>;</span><br></pre></td></tr></table></figure>
+
+<p>通过该函数可以读取串口接受到的数据。</p>
+<ol start="5">
+<li><strong>串口状态</strong>。串口的状态可以通过状态寄存器 USART_SR 读取。USART_SR 的各位描述如下图：</li>
+</ol>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="/2023/04/13/%E4%B8%B2%E5%8F%A3%E9%80%9A%E4%BF%A1/a.png"></p>
+<p>RXNE（读数据寄存器非空），当该位被置 1 的时候，就是提示已经有数据被接收到了，并 且可以读出来了。这时候我们要做的就是尽快去读取 USART_DR，通过读 USART_DR 可以将 该位清零，也可以向该位写 0，直接清除。</p>
+<p> TC（发送完成），当该位被置位的时候，表示 USART_DR 内的数据已经被发送完成了。如 果设置了这个位的中断，则会产生中断。该位也有两种清零方式：1）读 USART_SR，写 USART_DR。2）直接向该位写 0。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">FlagStatus <span class="title function_">USART_GetFlagStatus</span><span class="params">(USART_TypeDef* USARTx, <span class="type">uint16_t</span> USART_FLAG)</span>；</span><br></pre></td></tr></table></figure>
+
+<p>函数的第二个入口参数非常关键，它是标示我们要查看串口的哪种状态，比如上面讲解的 RXNE(读数据寄存器非空)以及 TC(发送完成)。例如我们要判断读寄存器是否非空(RXNE)，操 作库函数的方法是：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">USART_GetFlagStatus(USART1, USART_FLAG_RXNE)；</span><br></pre></td></tr></table></figure>
+
+<p>我们要判断发送是否完成(TC)，操作库函数的方法是：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">USART_GetFlagStatus(USART1, USART_FLAG_TC);</span><br></pre></td></tr></table></figure>
+
+<ol start="6">
+<li><strong>串口使能</strong></li>
+</ol>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">USART_Cmd(USART1, ENABLE); <span class="comment">//使能串口 </span></span><br></pre></td></tr></table></figure>
+
+<ol start="7">
+<li><strong>开启串口响应中断</strong>。有些时候当我们还需要开启串口中断，那么我们还需要使能串口中 断，使能串口中断的函数是：</li>
+</ol>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">USART_ITConfig</span><span class="params">(USART_TypeDef* USARTx, <span class="type">uint16_t</span> USART_IT, FunctionalState NewState)</span></span><br></pre></td></tr></table></figure>
+
+<p>函数的第二个入口参数是标示使能串口的类型，也就是使能哪种中断，因为串口的中断类 型有很多种。比如在接收到数据的时候（RXNE 读数据寄存器非空），我们要产生中断，那么我 们开启中断的方法是：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">USART_ITConfig(USART1, USART_IT_RXNE, ENABLE);<span class="comment">//开启中断，接收到数据中断</span></span><br></pre></td></tr></table></figure>
+
+<ol start="8">
+<li><strong>获取相应中断状态</strong>。当我们使能了某个中断的时候，当该中断发生了，就会设置状态寄 存器中的某个标志位。经常我们在中断处理函数中，要判断该中断是哪种中断，使用的函数是：</li>
+</ol>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ITStatus <span class="title function_">USART_GetITStatus</span><span class="params">(USART_TypeDef* USARTx, <span class="type">uint16_t</span> USART_IT)</span></span><br></pre></td></tr></table></figure>
+
+<p>比如我们使能了串口发送完成中断，那么当中断发生了， 我们便可以在中断处理函数中调用这 个函数来判断到底是否是串口发送完成中断，方法是：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">USART_GetITStatus(USART1, USART_IT_TC)</span><br></pre></td></tr></table></figure>
+
+
+
+<div class="article-footer reveal fs14"><section id="license"><div class="header"><span>许可协议</span></div><div class="body"><p>本文采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">署名-非商业性使用-相同方式共享 4.0 国际</a> 许可协议，转载请注明出处。</p>
+</div></section></div>
+
+</article>
+
+<div class="related-wrap reveal" id="read-next"><section class="body"><div class="item" id="prev"></div><div class="item" id="next"><div class="note">较早文章</div><a href="/2023/04/13/%E6%8C%89%E9%94%AE%E8%BE%93%E5%85%A5/">2. 按键输入</a></div></section></div>
+
+
+
+
+
+
+
+
+      
+<footer class="page-footer reveal fs12"><hr><div class="text"><p>本站由 <a href="/">@anonymity</a> 使用 <a target="_blank" rel="noopener" href="https://github.com/xaoxuu/hexo-theme-stellar">Stellar</a> 主题创建。<br>本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议，转载请注明出处。</p>
+</div></footer>
+
+      <div class='float-panel mobile-only blur' style='display:none'>
+  <button type='button' class='sidebar-toggle mobile' onclick='sidebar.toggle()'>
+    <svg class="icon" style="width: 1em; height: 1em;vertical-align: middle;fill: currentColor;overflow: hidden;" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="15301"><path d="M566.407 808.3c26.9-0.1 49.3-20.8 51.6-47.6-1.9-27.7-23.9-49.7-51.6-51.6h-412.6c-28.2-1.4-52.6 19.5-55.5 47.6 2.3 26.8 24.6 47.5 51.6 47.6h416.5v4z m309.3-249.9c26.9-0.1 49.3-20.8 51.6-47.6-2.2-26.8-24.6-47.5-51.6-47.6h-721.9c-27.7-2.8-52.5 17.4-55.3 45.1-0.1 0.8-0.1 1.7-0.2 2.5 0.9 27.2 23.6 48.5 50.7 47.6H875.707z m-103.1-245.9c26.9-0.1 49.3-20.8 51.6-47.6-0.4-28.3-23.2-51.1-51.5-51.6h-618.9c-29.5-1.1-54.3 21.9-55.5 51.4v0.2c1.4 27.8 25.2 49.2 53 47.8 0.8 0 1.7-0.1 2.5-0.2h618.8z" p-id="15302"></path><path d="M566.407 808.3c26.9-0.1 49.3-20.8 51.6-47.6-1.9-27.7-23.9-49.7-51.6-51.6h-412.6c-28.2-1.4-52.6 19.5-55.5 47.6 1.9 27.7 23.9 49.7 51.6 51.6h416.5z m309.3-249.9c26.9-0.1 49.3-20.8 51.6-47.6-2.2-26.8-24.6-47.5-51.6-47.6h-721.9c-27.7-2.8-52.5 17.4-55.3 45.1-0.1 0.8-0.1 1.7-0.2 2.5 0.9 27.2 23.6 48.5 50.7 47.6H875.707z m-103.1-245.9c26.9-0.1 49.3-20.8 51.6-47.6-0.4-28.3-23.2-51.1-51.5-51.6h-618.9c-29.5-1.1-54.3 21.9-55.5 51.4v0.2c1.4 27.8 25.2 49.2 53 47.8 0.8 0 1.7-0.1 2.5-0.2h618.8z" p-id="15303"></path></svg>
+  </button>
+</div>
+
+    </div>
+  </div>
+  <div class='scripts'>
+    <script type="text/javascript">
+  const stellar = {
+    // 懒加载 css https://github.com/filamentgroup/loadCSS
+    loadCSS: (href, before, media, attributes) => {
+      var doc = window.document;
+      var ss = doc.createElement("link");
+      var ref;
+      if (before) {
+        ref = before;
+      } else {
+        var refs = (doc.body || doc.getElementsByTagName("head")[0]).childNodes;
+        ref = refs[refs.length - 1];
+      }
+      var sheets = doc.styleSheets;
+      if (attributes) {
+        for (var attributeName in attributes) {
+          if (attributes.hasOwnProperty(attributeName)) {
+            ss.setAttribute(attributeName, attributes[attributeName]);
+          }
+        }
+      }
+      ss.rel = "stylesheet";
+      ss.href = href;
+      ss.media = "only x";
+      function ready(cb) {
+        if (doc.body) {
+          return cb();
+        }
+        setTimeout(function () {
+          ready(cb);
+        });
+      }
+      ready(function () {
+        ref.parentNode.insertBefore(ss, before ? ref : ref.nextSibling);
+      });
+      var onloadcssdefined = function (cb) {
+        var resolvedHref = ss.href;
+        var i = sheets.length;
+        while (i--) {
+          if (sheets[i].href === resolvedHref) {
+            return cb();
+          }
+        }
+        setTimeout(function () {
+          onloadcssdefined(cb);
+        });
+      };
+      function loadCB() {
+        if (ss.addEventListener) {
+          ss.removeEventListener("load", loadCB);
+        }
+        ss.media = media || "all";
+      }
+      if (ss.addEventListener) {
+        ss.addEventListener("load", loadCB);
+      }
+      ss.onloadcssdefined = onloadcssdefined;
+      onloadcssdefined(loadCB);
+      return ss;
+    },
+
+    // 从 butterfly 和 volantis 获得灵感
+    loadScript: (src, opt) => new Promise((resolve, reject) => {
+      var script = document.createElement('script');
+      if (src.startsWith('/')){
+        src = stellar.config.root + src.substring(1);
+      }
+      script.src = src;
+      if (opt) {
+        for (let key of Object.keys(opt)) {
+          script[key] = opt[key]
+        }
+      } else {
+        // 默认异步，如果需要同步，第二个参数传入 {} 即可
+        script.async = true
+      }
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    }),
+
+    // https://github.com/jerryc127/hexo-theme-butterfly
+    jQuery: (fn) => {
+      if (typeof jQuery === 'undefined') {
+        stellar.loadScript(stellar.plugins.jQuery).then(fn)
+      } else {
+        fn()
+      }
+    }
+  };
+  stellar.version = '1.18.5';
+  stellar.github = 'https://github.com/xaoxuu/hexo-theme-stellar/tree/1.18.5';
+  stellar.config = {
+    date_suffix: {
+      just: '刚刚',
+      min: '分钟前',
+      hour: '小时前',
+      day: '天前',
+      month: '个月前',
+    },
+    root : '/',
+  };
+
+  // required plugins (only load if needs)
+  stellar.plugins = {
+    jQuery: 'https://gcore.jsdelivr.net/npm/jquery@3.6.2/dist/jquery.min.js'
+  };
+
+  if ('local_search') {
+    stellar.search = {};
+    stellar.search.service = 'local_search';
+    if (stellar.search.service == 'local_search') {
+      let service_obj = Object.assign({}, {"field":"all","path":"/search.json","content":true,"sort":"-date"});
+      stellar.search[stellar.search.service] = service_obj;
+    }
+  }
+
+  // stellar js
+  stellar.plugins.stellar = Object.assign({"sites":"/js/plugins/sites.js","friends":"/js/plugins/friends.js","ghinfo":"/js/plugins/ghinfo.js","timeline":"/js/plugins/timeline.js","linkcard":"/js/plugins/linkcard.js","fcircle":"/js/plugins/fcircle.js","weibo":"/js/plugins/weibo.js"});
+
+  stellar.plugins.marked = Object.assign("https://cdn.bootcdn.net/ajax/libs/marked/4.0.18/marked.min.js");
+  // optional plugins
+  if ('true' == 'true') {
+    stellar.plugins.lazyload = Object.assign({"enable":true,"js":"https://gcore.jsdelivr.net/npm/vanilla-lazyload@17.8.3/dist/lazyload.min.js","transition":"blur"});
+  }
+  if ('true' == 'true') {
+    stellar.plugins.swiper = Object.assign({"enable":true,"css":"https://unpkg.com/swiper@8.4.5/swiper-bundle.min.css","js":"https://unpkg.com/swiper@8.4.5/swiper-bundle.min.js"});
+  }
+  if ('' == 'true') {
+    stellar.plugins.scrollreveal = Object.assign({"enable":null,"js":"https://gcore.jsdelivr.net/npm/scrollreveal@4.0.9/dist/scrollreveal.min.js","distance":"8px","duration":500,"interval":100,"scale":1});
+  }
+  if ('true' == 'true') {
+    stellar.plugins.preload = Object.assign({"enable":true,"service":"flying_pages","instant_page":"https://gcore.jsdelivr.net/gh/volantis-x/cdn-volantis@4.1.2/js/instant_page.js","flying_pages":"https://gcore.jsdelivr.net/gh/gijo-varghese/flying-pages@2.1.2/flying-pages.min.js"});
+  }
+  if ('true' == 'true') {
+    stellar.plugins.fancybox = Object.assign({"enable":true,"js":"https://gcore.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.umd.js","css":"https://gcore.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.css","selector":".swiper-slide img"});
+  }
+  if ('false' == 'true') {
+    stellar.plugins.heti = Object.assign({"enable":false,"css":"https://unpkg.com/heti@0.9.2/umd/heti.min.css","js":"https://unpkg.com/heti@0.9.2/umd/heti-addon.min.js"});
+  }
+</script>
+
+<!-- required -->
+
+  
+<script src="/js/main.js" async></script>
+
+
+
+<!-- optional -->
+
+
+
+<!-- inject -->
+
+
+  </div>
+</body>
+</html>
