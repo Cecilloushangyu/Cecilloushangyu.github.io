@@ -5,7 +5,7 @@
   <meta name="generator" content="Hexo 6.3.0">
   <meta name="hexo-theme" content="https://github.com/xaoxuu/hexo-theme-stellar/tree/1.18.5">
   <meta charset="utf-8">
-  <meta name="robots" content="noindex,follow">
+  
 
   <meta http-equiv='x-dns-prefetch-control' content='on' />
   <link rel='dns-prefetch' href='https://gcore.jsdelivr.net'>
@@ -20,22 +20,27 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="theme-color" content="#f8f8f8">
   
-  <title>归档 - Cecilloushangy's Blog</title>
+  <title>舵机 - Cecilloushangy's Blog</title>
 
   
-    <meta name="description" content="咸鱼要翻身">
-<meta property="og:type" content="website">
-<meta property="og:title" content="归档">
-<meta property="og:url" content="http://example.com/archives/index.html">
+    <meta name="description" content="舵机的工作原理参考博主的解释。 舵机是一种被广泛运用的执行部件，各个领域广受欢迎，能够用于机器人的运动控制等。 舵机上有三根线，分别是GND、VCC和SIG，也就是地线、电源线和信号线，其中的PWM波就是从信号线输入给舵机。 舵机接收的PWM信号频率为50HZ，即周期为20ms。当高电平的脉宽在0.5ms-2.5ms之间时舵机就可以对应旋转到不同的角度。  12345t &#x3D; 0.5ms——————">
+<meta property="og:type" content="article">
+<meta property="og:title" content="舵机">
+<meta property="og:url" content="http://example.com/2023/04/14/%E8%88%B5%E6%9C%BA/index.html">
 <meta property="og:site_name" content="Cecilloushangy&#39;s Blog">
-<meta property="og:description" content="咸鱼要翻身">
+<meta property="og:description" content="舵机的工作原理参考博主的解释。 舵机是一种被广泛运用的执行部件，各个领域广受欢迎，能够用于机器人的运动控制等。 舵机上有三根线，分别是GND、VCC和SIG，也就是地线、电源线和信号线，其中的PWM波就是从信号线输入给舵机。 舵机接收的PWM信号频率为50HZ，即周期为20ms。当高电平的脉宽在0.5ms-2.5ms之间时舵机就可以对应旋转到不同的角度。  12345t &#x3D; 0.5ms——————">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/2023/04/14/%E8%88%B5%E6%9C%BA/a.gif">
+<meta property="article:published_time" content="2023-04-14T09:09:23.000Z">
+<meta property="article:modified_time" content="2023-04-14T09:15:56.508Z">
 <meta property="article:author" content="loushangyu">
-<meta name="twitter:card" content="summary">
+<meta property="article:tag" content="STM32">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/2023/04/14/%E8%88%B5%E6%9C%BA/a.gif">
   
   
   
-  
+  <meta name="keywords" content="STM32">
 
   <!-- feed -->
   
@@ -60,8 +65,10 @@
   
 
 
+
+
   <div class='l_body' id='start'>
-    <aside class='l_left' layout=''>
+    <aside class='l_left' layout='post'>
     
 
   
@@ -75,344 +82,50 @@
 <div class="widgets">
 <widget class="widget-wrapper search"><div class="widget-body"><div class="search-wrapper" id="search"><form class="search-form"><input type="text" class="search-input" id="search-input" data-filter="/blog/" placeholder="文章搜索"><svg t="1670596976048" class="icon search-icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2676" width="200" height="200"><path d="M938.2 832.6L723.8 618.1c-2.5-2.5-5.3-4.4-7.9-6.4 36.2-55.6 57.3-121.8 57.3-193.1C773.3 222.8 614.6 64 418.7 64S64 222.8 64 418.6c0 195.9 158.8 354.6 354.6 354.6 71.3 0 137.5-21.2 193.2-57.4 2 2.7 3.9 5.4 6.3 7.8L832.5 938c14.6 14.6 33.7 21.9 52.8 21.9 19.1 0 38.2-7.3 52.8-21.8 29.2-29.1 29.2-76.4 0.1-105.5M418.7 661.3C284.9 661.3 176 552.4 176 418.6 176 284.9 284.9 176 418.7 176c133.8 0 242.6 108.9 242.6 242.7 0 133.7-108.9 242.6-242.6 242.6" p-id="2677"></path></svg></form><div id="search-result"></div><div class="search-no-result">没有找到内容！</div></div></div></widget>
 
-<widget class="widget-wrapper recent"><div class="widget-header cap theme dis-select"><span class="name">最近更新</span></div><div class="widget-body related-posts fs14"><a class="item title" href="/2023/04/15/%E7%BC%96%E7%A0%81%E5%99%A8/"><span class="title">编码器</span></a><a class="item title" href="/2023/04/15/%E5%AE%9A%E6%97%B6%E5%99%A8%E8%BE%93%E5%85%A5%E6%8D%95%E8%8E%B7/"><span class="title">定时器输入捕获</span></a><a class="item title" href="/2023/04/14/%E5%AE%9A%E6%97%B6%E5%99%A8%E6%A1%86%E5%9B%BE%E8%A7%A3%E8%AF%BB/"><span class="title">定时器框图解读</span></a><a class="item title" href="/2023/04/14/%E5%AE%9A%E6%97%B6%E5%99%A8%E8%BE%93%E5%87%BA%E6%AF%94%E8%BE%83/"><span class="title">定时器输出比较</span></a><a class="item title" href="/2023/04/14/%E9%A2%84%E5%88%86%E9%A2%91%E5%99%A8%E5%8F%8A%E5%85%B6%E8%AE%A1%E7%AE%97/"><span class="title">预分频器及其计算</span></a></div></widget>
+
+<widget class="widget-wrapper toc single" id="data-toc"><div class="widget-header cap dis-select"><span class="name">舵机</span></div><div class="widget-body fs14"><div class="doc-tree active"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%88%B5%E6%9C%BA%E7%9A%84%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86"><span class="toc-text">舵机的工作原理</span></a></li></ol></div></div></widget>
+
+
 
 
 </div>
 
 
     </aside>
-    <div class='l_main list'>
+    <div class='l_main'>
       
-  
-
-<header class="header mobile-only"><div class="logo-wrap"><a class="title" href="/"><div class="main" ff="title">Cecilloushangy's Blog</div><div class="sub cap">Loushangyu</div></a></div></header>
-
-
 
       
 
-  
-  
 
-<div class="nav-wrap"><nav class="sub post cap"><a href="/">近期发布</a><a href="/tags">标签</a><a class="active" href="/archives">归档</a></nav></div>
 
-  <div class='post-list'>
-  	
-  	
-  		
-  		
-  			
-  		
-  	
-  		
-  		
-  	
-  		
-  		
-  	
-  		
-  		
-  	
-  		
-  		
-  	
-  		
-  		
-  	
-  		
-  		
-  	
-  		
-  		
-  	
-  		
-  		
-  	
-  		
-  		
-  	
-  		
-  		
-  	
-  		
-  		
-  	
-  		
-  		
-  	
-  		
-  		
-  	
-  		
-  		
-  	
-  		
-  		
-  	
-  		
-  		
-  	
-  		
-  		
-  	
-  		
-  		
-  	
-  	
-  		<article class='' id='archive'>
-  			<div class='archive-header h4'>2023</div>
-  			
-  				
-  		    
-  				
-  		    
-  				
-  		    
-  				
-  		    
-  				
-  		    
-  				
-  		    
-  				
-  		    
-  				
-  		    
-  				
-  		    
-  				
-  		    
-  				
-  		    
-  				
-  		    
-  				
-  		    
-  				
-  		    
-  				
-  		    
-  				
-  		    
-  				
-  		    
-  				
-  		    
-  				
-  		    
-  				<div class='archive-list'>
-            <a class='post fs14' href="/2023/04/15/%E7%BC%96%E7%A0%81%E5%99%A8/">
-    					<time>04-15</time>
-    					<span>
-                
-      						编码器
-      					
-              </span>
-    				</a>
-          </div>
-  			
-  				<div class='archive-list'>
-            <a class='post fs14' href="/2023/04/15/%E5%AE%9A%E6%97%B6%E5%99%A8%E8%BE%93%E5%85%A5%E6%8D%95%E8%8E%B7/">
-    					<time>04-15</time>
-    					<span>
-                
-      						定时器输入捕获
-      					
-              </span>
-    				</a>
-          </div>
-  			
-  				<div class='archive-list'>
-            <a class='post fs14' href="/2023/04/14/%E5%AE%9A%E6%97%B6%E5%99%A8%E8%BE%93%E5%87%BA%E6%AF%94%E8%BE%83/">
-    					<time>04-14</time>
-    					<span>
-                
-      						定时器输出比较
-      					
-              </span>
-    				</a>
-          </div>
-  			
-  				<div class='archive-list'>
-            <a class='post fs14' href="/2023/04/14/%E5%AE%9A%E6%97%B6%E5%99%A8%E6%A1%86%E5%9B%BE%E8%A7%A3%E8%AF%BB/">
-    					<time>04-14</time>
-    					<span>
-                
-      						定时器框图解读
-      					
-              </span>
-    				</a>
-          </div>
-  			
-  				<div class='archive-list'>
-            <a class='post fs14' href="/2023/04/14/%E9%A2%84%E5%88%86%E9%A2%91%E5%99%A8%E5%8F%8A%E5%85%B6%E8%AE%A1%E7%AE%97/">
-    					<time>04-14</time>
-    					<span>
-                
-      						预分频器及其计算
-      					
-              </span>
-    				</a>
-          </div>
-  			
-  				<div class='archive-list'>
-            <a class='post fs14' href="/2023/04/14/%E8%88%B5%E6%9C%BA/">
-    					<time>04-14</time>
-    					<span>
-                
-      						舵机
-      					
-              </span>
-    				</a>
-          </div>
-  			
-  				<div class='archive-list'>
-            <a class='post fs14' href="/2023/04/14/OLED/">
-    					<time>04-14</time>
-    					<span>
-                
-      						5.OLED
-      					
-              </span>
-    				</a>
-          </div>
-  			
-  				<div class='archive-list'>
-            <a class='post fs14' href="/2023/04/14/%E5%9F%BA%E4%BA%8E%E6%B1%9F%E7%A7%91%E5%A4%A7%E8%87%AA%E5%8C%96%E5%8D%8FUP%E4%B8%BB%E4%BB%A3%E7%A0%81%E7%9A%84%E7%90%86%E8%A7%A3/">
-    					<time>04-14</time>
-    					<span>
-                
-      						基于江科大自化协UP主串口代码的理解
-      					
-              </span>
-    				</a>
-          </div>
-  			
-  				<div class='archive-list'>
-            <a class='post fs14' href="/2023/04/14/printf%E9%87%8D%E5%AE%9A%E5%90%91/">
-    					<time>04-14</time>
-    					<span>
-                
-      						printf重定向
-      					
-              </span>
-    				</a>
-          </div>
-  			
-  				<div class='archive-list'>
-            <a class='post fs14' href="/2023/04/14/%E4%B8%B2%E5%8F%A3%E5%8F%91%E9%80%81%E6%95%B0%E6%8D%AE%E5%A6%82%E4%BD%95%E7%9B%B4%E6%8E%A5%E5%B0%86%E6%95%B0%E5%AD%97%E5%8F%91%E9%80%81%E5%87%BA%E5%8E%BB%EF%BC%9F/">
-    					<time>04-14</time>
-    					<span>
-                
-      						串口发送数据如何直接将数字发送出去？
-      					
-              </span>
-    				</a>
-          </div>
-  			
-  				<div class='archive-list'>
-            <a class='post fs14' href="/2023/04/14/GPIO%E7%9A%84%E5%85%AB%E7%A7%8D%E5%B7%A5%E4%BD%9C%E6%A8%A1%E5%BC%8F/">
-    					<time>04-14</time>
-    					<span>
-                
-      						GPIO的八种工作模式
-      					
-              </span>
-    				</a>
-          </div>
-  			
-  				<div class='archive-list'>
-            <a class='post fs14' href="/2023/04/13/%E4%B8%B2%E5%8F%A3%E4%B8%AD%E6%96%AD%E7%A8%8B%E5%BA%8F%E8%A7%A3%E8%AF%BB/">
-    					<time>04-13</time>
-    					<span>
-                
-      						4.串口中断程序解读
-      					
-              </span>
-    				</a>
-          </div>
-  			
-  				<div class='archive-list'>
-            <a class='post fs14' href="/2023/04/13/%E4%B8%B2%E5%8F%A3%E9%80%9A%E4%BF%A1/">
-    					<time>04-13</time>
-    					<span>
-                
-      						3.串口通信初理解
-      					
-              </span>
-    				</a>
-          </div>
-  			
-  				<div class='archive-list'>
-            <a class='post fs14' href="/2023/04/13/%E6%8C%89%E9%94%AE%E8%BE%93%E5%85%A5/">
-    					<time>04-13</time>
-    					<span>
-                
-      						2. 按键输入
-      					
-              </span>
-    				</a>
-          </div>
-  			
-  				<div class='archive-list'>
-            <a class='post fs14' href="/2023/04/13/%E7%82%B9%E4%BA%AE%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E4%B8%AALED%E5%B0%8F%E7%81%AF/">
-    					<time>04-13</time>
-    					<span>
-                
-      						1. 点亮我的第一个LED小灯
-      					
-              </span>
-    				</a>
-          </div>
-  			
-  				<div class='archive-list'>
-            <a class='post fs14' href="/2023/04/13/%E5%A6%82%E4%BD%95%E6%9F%A5%E7%9C%8B%E8%87%AA%E5%B7%B1%E4%BD%BF%E7%94%A8%E7%9A%84%E6%9D%BF%E5%AD%90%E7%9A%84%E6%97%B6%E9%92%9F%E9%A2%91%E7%8E%87/">
-    					<time>04-13</time>
-    					<span>
-                
-      						如何查看自己使用的板子的时钟频率
-      					
-              </span>
-    				</a>
-          </div>
-  			
-  				<div class='archive-list'>
-            <a class='post fs14' href="/2023/04/13/SysTick%E5%BB%B6%E6%97%B6%E5%87%BD%E6%95%B0/">
-    					<time>04-13</time>
-    					<span>
-                
-      						delay延时函数
-      					
-              </span>
-    				</a>
-          </div>
-  			
-  				<div class='archive-list'>
-            <a class='post fs14' href="/2023/04/13/%E6%BB%B4%E7%AD%94%E5%AE%9A%E6%97%B6%E5%99%A8/">
-    					<time>04-13</time>
-    					<span>
-                
-      						滴答定时器
-      					
-              </span>
-    				</a>
-          </div>
-  			
-  				<div class='archive-list'>
-            <a class='post fs14' href="/2023/04/12/%E4%BD%8D%E5%B8%A6%E6%93%8D%E4%BD%9C/">
-    					<time>04-12</time>
-    					<span>
-                
-      						位带操作
-      					
-              </span>
-    				</a>
-          </div>
-  			
-  		</article>
-  	
-  </div>
+<div class="bread-nav fs12"><div id="breadcrumb"><a class="cap breadcrumb" href="/">主页</a><span class="sep"></span><a class="cap breadcrumb" href="/">文章</a></div><div id="post-meta">发布于&nbsp;<time datetime="2023-04-14T09:09:23.000Z">2023-04-14</time></div></div>
+
+<article class='md-text content post'>
+<h1 class="article-title"><span>舵机</span></h1>
+<h2 id="舵机的工作原理"><a href="#舵机的工作原理" class="headerlink" title="舵机的工作原理"></a>舵机的工作原理</h2><p><a target="_blank" rel="noopener" href="http://t.csdn.cn/1MIa3">参考博主的解释。</a></p>
+<p>舵机是一种被广泛运用的执行部件，各个领域广受欢迎，能够用于机器人的运动控制等。</p>
+<p>舵机上有三根线，分别是GND、VCC和SIG，也就是地线、电源线和信号线，其中的PWM波就是从信号线输入给舵机。</p>
+<p>舵机接收的PWM信号频率为50HZ，即周期为20ms。当高电平的脉宽在0.5ms-2.5ms之间时舵机就可以对应旋转到不同的角度。</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="/2023/04/14/%E8%88%B5%E6%9C%BA/a.gif"></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">t = <span class="number">0.5</span>ms——————-舵机会转到 <span class="number">0</span> °</span><br><span class="line">t = <span class="number">1.0</span>ms——————-舵机会转到 <span class="number">45</span>°</span><br><span class="line">t = <span class="number">1.5</span>ms——————-舵机会转到 <span class="number">90</span>°</span><br><span class="line">t = <span class="number">2.0</span>ms——————-舵机会转到 <span class="number">135</span>°</span><br><span class="line">t = <span class="number">2.5</span>ms——————-舵机会转到 <span class="number">180</span>°</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">T=  <span class="number">1</span>/f=<span class="number">1</span>/<span class="number">50</span>=<span class="number">0.02</span>s=<span class="number">20</span>ms</span><br></pre></td></tr></table></figure>
+
+
+
+<div class="article-footer reveal fs14"><section id="license"><div class="header"><span>许可协议</span></div><div class="body"><p>本文采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">署名-非商业性使用-相同方式共享 4.0 国际</a> 许可协议，转载请注明出处。</p>
+</div></section></div>
+
+</article>
+
+<div class="related-wrap reveal" id="read-next"><section class="body"><div class="item" id="prev"><div class="note">较新文章</div><a href="/2023/04/14/%E9%A2%84%E5%88%86%E9%A2%91%E5%99%A8%E5%8F%8A%E5%85%B6%E8%AE%A1%E7%AE%97/">预分频器及其计算</a></div><div class="item" id="next"><div class="note">较早文章</div><a href="/2023/04/14/OLED/">5.OLED</a></div></section></div>
+
+
+
+
+
+
 
 
       

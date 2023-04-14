@@ -23,15 +23,15 @@
   <title>5.OLED - Cecilloushangy's Blog</title>
 
   
-    <meta name="description" content="j 江科大自化协UP主的代码：我不会写 1234567891011121314#ifndef __OLED_H#define __OLED_Hvoid OLED_Init(void);void OLED_Clear(void);void OLED_ShowChar(uint8_t Line, uint8_t Column, char Char);void OLED_ShowString(uint8">
+    <meta name="description" content="江科大自化协UP主的代码：我不会写 1234567891011121314#ifndef __OLED_H#define __OLED_Hvoid OLED_Init(void);void OLED_Clear(void);void OLED_ShowChar(uint8_t Line, uint8_t Column, char Char);void OLED_ShowString(uint8_t">
 <meta property="og:type" content="article">
 <meta property="og:title" content="5.OLED">
 <meta property="og:url" content="http://example.com/2023/04/14/OLED/index.html">
 <meta property="og:site_name" content="Cecilloushangy&#39;s Blog">
-<meta property="og:description" content="j 江科大自化协UP主的代码：我不会写 1234567891011121314#ifndef __OLED_H#define __OLED_Hvoid OLED_Init(void);void OLED_Clear(void);void OLED_ShowChar(uint8_t Line, uint8_t Column, char Char);void OLED_ShowString(uint8">
+<meta property="og:description" content="江科大自化协UP主的代码：我不会写 1234567891011121314#ifndef __OLED_H#define __OLED_Hvoid OLED_Init(void);void OLED_Clear(void);void OLED_ShowChar(uint8_t Line, uint8_t Column, char Char);void OLED_ShowString(uint8_t">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2023-04-14T08:36:36.000Z">
-<meta property="article:modified_time" content="2023-04-14T09:05:59.854Z">
+<meta property="article:modified_time" content="2023-04-14T09:09:55.093Z">
 <meta property="article:author" content="loushangyu">
 <meta property="article:tag" content="STM32">
 <meta name="twitter:card" content="summary_large_image">
@@ -82,7 +82,7 @@
 
 
 
-<widget class="widget-wrapper recent"><div class="widget-header cap theme dis-select"><span class="name">最近更新</span></div><div class="widget-body related-posts fs14"><a class="item title" href="/2023/04/14/OLED/"><span class="title">5.OLED</span></a><a class="item title" href="/2023/04/14/%E5%9F%BA%E4%BA%8E%E6%B1%9F%E7%A7%91%E5%A4%A7%E8%87%AA%E5%8C%96%E5%8D%8FUP%E4%B8%BB%E4%BB%A3%E7%A0%81%E7%9A%84%E7%90%86%E8%A7%A3/"><span class="title">基于江科大自化协UP主串口代码的理解</span></a><a class="item title" href="/2023/04/14/printf%E9%87%8D%E5%AE%9A%E5%90%91/"><span class="title">printf重定向</span></a><a class="item title" href="/2023/04/14/%E4%B8%B2%E5%8F%A3%E5%8F%91%E9%80%81%E6%95%B0%E6%8D%AE%E5%A6%82%E4%BD%95%E7%9B%B4%E6%8E%A5%E5%B0%86%E6%95%B0%E5%AD%97%E5%8F%91%E9%80%81%E5%87%BA%E5%8E%BB%EF%BC%9F/"><span class="title">串口发送数据如何直接将数字发送出去？</span></a><a class="item title" href="/2023/04/14/GPIO%E7%9A%84%E5%85%AB%E7%A7%8D%E5%B7%A5%E4%BD%9C%E6%A8%A1%E5%BC%8F/"><span class="title">GPIO的八种工作模式</span></a></div></widget>
+<widget class="widget-wrapper recent"><div class="widget-header cap theme dis-select"><span class="name">最近更新</span></div><div class="widget-body related-posts fs14"><a class="item title" href="/2023/04/15/%E7%BC%96%E7%A0%81%E5%99%A8/"><span class="title">编码器</span></a><a class="item title" href="/2023/04/15/%E5%AE%9A%E6%97%B6%E5%99%A8%E8%BE%93%E5%85%A5%E6%8D%95%E8%8E%B7/"><span class="title">定时器输入捕获</span></a><a class="item title" href="/2023/04/14/%E5%AE%9A%E6%97%B6%E5%99%A8%E6%A1%86%E5%9B%BE%E8%A7%A3%E8%AF%BB/"><span class="title">定时器框图解读</span></a><a class="item title" href="/2023/04/14/%E5%AE%9A%E6%97%B6%E5%99%A8%E8%BE%93%E5%87%BA%E6%AF%94%E8%BE%83/"><span class="title">定时器输出比较</span></a><a class="item title" href="/2023/04/14/%E9%A2%84%E5%88%86%E9%A2%91%E5%99%A8%E5%8F%8A%E5%85%B6%E8%AE%A1%E7%AE%97/"><span class="title">预分频器及其计算</span></a></div></widget>
 
 
 
@@ -103,7 +103,6 @@
 
 <article class='md-text content post'>
 <h1 class="article-title"><span>5.OLED</span></h1>
-<p>j</p>
 <p>江科大自化协UP主的代码：我不会写</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">ifndef</span> __OLED_H</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> __OLED_H</span></span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">OLED_Init</span><span class="params">(<span class="type">void</span>)</span>;</span><br><span class="line"><span class="type">void</span> <span class="title function_">OLED_Clear</span><span class="params">(<span class="type">void</span>)</span>;</span><br><span class="line"><span class="type">void</span> <span class="title function_">OLED_ShowChar</span><span class="params">(<span class="type">uint8_t</span> Line, <span class="type">uint8_t</span> Column, <span class="type">char</span> Char)</span>;</span><br><span class="line"><span class="type">void</span> <span class="title function_">OLED_ShowString</span><span class="params">(<span class="type">uint8_t</span> Line, <span class="type">uint8_t</span> Column, <span class="type">char</span> *String)</span>;</span><br><span class="line"><span class="type">void</span> <span class="title function_">OLED_ShowNum</span><span class="params">(<span class="type">uint8_t</span> Line, <span class="type">uint8_t</span> Column, <span class="type">uint32_t</span> Number, <span class="type">uint8_t</span> Length)</span>;</span><br><span class="line"><span class="type">void</span> <span class="title function_">OLED_ShowSignedNum</span><span class="params">(<span class="type">uint8_t</span> Line, <span class="type">uint8_t</span> Column, <span class="type">int32_t</span> Number, <span class="type">uint8_t</span> Length)</span>;</span><br><span class="line"><span class="type">void</span> <span class="title function_">OLED_ShowHexNum</span><span class="params">(<span class="type">uint8_t</span> Line, <span class="type">uint8_t</span> Column, <span class="type">uint32_t</span> Number, <span class="type">uint8_t</span> Length)</span>;</span><br><span class="line"><span class="type">void</span> <span class="title function_">OLED_ShowBinNum</span><span class="params">(<span class="type">uint8_t</span> Line, <span class="type">uint8_t</span> Column, <span class="type">uint32_t</span> Number, <span class="type">uint8_t</span> Length)</span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
@@ -116,7 +115,7 @@
 
 </article>
 
-<div class="related-wrap reveal" id="read-next"><section class="body"><div class="item" id="prev"></div><div class="item" id="next"><div class="note">较早文章</div><a href="/2023/04/14/%E5%9F%BA%E4%BA%8E%E6%B1%9F%E7%A7%91%E5%A4%A7%E8%87%AA%E5%8C%96%E5%8D%8FUP%E4%B8%BB%E4%BB%A3%E7%A0%81%E7%9A%84%E7%90%86%E8%A7%A3/">基于江科大自化协UP主串口代码的理解</a></div></section></div>
+<div class="related-wrap reveal" id="read-next"><section class="body"><div class="item" id="prev"><div class="note">较新文章</div><a href="/2023/04/14/%E8%88%B5%E6%9C%BA/">舵机</a></div><div class="item" id="next"><div class="note">较早文章</div><a href="/2023/04/14/%E5%9F%BA%E4%BA%8E%E6%B1%9F%E7%A7%91%E5%A4%A7%E8%87%AA%E5%8C%96%E5%8D%8FUP%E4%B8%BB%E4%BB%A3%E7%A0%81%E7%9A%84%E7%90%86%E8%A7%A3/">基于江科大自化协UP主串口代码的理解</a></div></section></div>
 
 
 
