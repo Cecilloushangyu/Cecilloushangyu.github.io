@@ -26,7 +26,7 @@
     <meta name="description" content="咸鱼要翻身">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Cecilloushangy&#39;s Blog">
-<meta property="og:url" content="http://example.com/index.html">
+<meta property="og:url" content="http://example.com/page/2/index.html">
 <meta property="og:site_name" content="Cecilloushangy&#39;s Blog">
 <meta property="og:description" content="咸鱼要翻身">
 <meta property="og:locale" content="zh_CN">
@@ -97,113 +97,21 @@
 
 <div class="nav-wrap"><nav class="sub post cap"><a class="active" href="/">近期发布</a><a href="/tags">标签</a><a href="/archives">归档</a></nav></div>
 
-  <div class="post-list post"><a class="post-card post " href="/2023/04/14/OLED/">
-<article class="md-text"><div class="post-cover"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://source.unsplash.com/1280x640/?STM32"/></div><h2 class="post-title">5.OLED</h2><div class="excerpt"><p>j
-江科大自化协UP主的代码：我不会写
-1234567891011121314#ifndef __OLED_H#define __OLED_Hvoid OLED_Init(void);void OLED_Clear(void);void OLED_ShowChar(uint8_t Line, uint8_t Column, char Char);void OLED_ShowString(ui...</p></div><div class="meta cap"><span class="cap" id="post-meta">发布于&nbsp;<time datetime="2023-04-14T08:36:36.000Z">2023-04-14</time></span></div></article>
-</a><a class="post-card post " href="/2023/04/14/%E5%9F%BA%E4%BA%8E%E6%B1%9F%E7%A7%91%E5%A4%A7%E8%87%AA%E5%8C%96%E5%8D%8FUP%E4%B8%BB%E4%BB%A3%E7%A0%81%E7%9A%84%E7%90%86%E8%A7%A3/">
-<article class="md-text"><div class="post-cover"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://source.unsplash.com/1280x640/?STM32"/></div><h2 class="post-title">基于江科大自化协UP主串口代码的理解</h2><div class="excerpt"><p>usart_printf
-123#include &quot;usart.h&quot;uint8_t usart_RxFlag = 0;//接收状态标志位uint8_t usart_RxData = 0;//数据存储
-
-串口初始化，STM32F103C8T6串口1的引脚为PA.9,PA.10，PA9为TX，PA10为RX。
-123456789101112131415161718192021...</p></div><div class="meta cap"><span class="cap" id="post-meta">发布于&nbsp;<time datetime="2023-04-14T06:47:39.000Z">2023-04-14</time></span></div></article>
-</a><a class="post-card post " href="/2023/04/14/printf%E9%87%8D%E5%AE%9A%E5%90%91/">
-<article class="md-text"><div class="post-cover"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://source.unsplash.com/1280x640/?STM32"/></div><h2 class="post-title">printf重定向</h2><div class="excerpt"><p>在C语言中，我们向显示器发送数据的函数是printf函数，在嵌入式相关的开发中，为了使用printf函数将数据发送到串口将串口作为其显示硬件，我们需要重定向print。代码如下：
-12345678910111213141516int fputc(int ch,FILE *f)//重定向printf函数&#123;    usart_sendByte(ch);    return ch;&#1...</p></div><div class="meta cap"><span class="cap" id="post-meta">发布于&nbsp;<time datetime="2023-04-14T06:13:28.000Z">2023-04-14</time></span></div></article>
-</a><a class="post-card post " href="/2023/04/14/%E4%B8%B2%E5%8F%A3%E5%8F%91%E9%80%81%E6%95%B0%E6%8D%AE%E5%A6%82%E4%BD%95%E7%9B%B4%E6%8E%A5%E5%B0%86%E6%95%B0%E5%AD%97%E5%8F%91%E9%80%81%E5%87%BA%E5%8E%BB%EF%BC%9F/">
-<article class="md-text"><div class="post-cover"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://source.unsplash.com/1280x640/?STM32"/></div><h2 class="post-title">串口发送数据如何直接将数字发送出去？</h2><div class="excerpt"><p>有时候串口需要发送一些数据，这些数据有可能是数字，数字的发送需要先将其转换为字符串。代码如下：
-12345678910111213141516171819uint32_t usart_Pow(uint32_t X,uint32_t Y)//计算X的Y次方&#123;    uint32_t Result=1;    while(Y--)    &#123;        Result*=X;...</p></div><div class="meta cap"><span class="cap" id="post-meta">发布于&nbsp;<time datetime="2023-04-14T06:05:18.000Z">2023-04-14</time></span></div></article>
-</a><a class="post-card post " href="/2023/04/14/GPIO%E7%9A%84%E5%85%AB%E7%A7%8D%E5%B7%A5%E4%BD%9C%E6%A8%A1%E5%BC%8F/">
-<article class="md-text"><div class="post-cover"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://source.unsplash.com/1280x640/?STM32"/></div><h2 class="post-title">GPIO的八种工作模式</h2><div class="excerpt"><p>HSUD
-
-
-
-GPIO_Mode_AIN
-模拟输入
-
-
-
-GPIO_Mode_IN_FLOATING
-浮空输入
-
-
-GPIO_Mode_IPD
-下拉输入
-
-
-GPIO_Mode_IPU
-上拉输入
-
-
-GPIO_Mode_Out_OD
-开漏输出
-
-
-GPIO_Mode_Out_PP
-推挽输出
-
-
-GPIO_Mode_AF_OD
-复用开漏输出
-
-
-GPIO_Mode_AF_PP
-复用推挽输出
-
-
-</p></div><div class="meta cap"><span class="cap" id="post-meta">发布于&nbsp;<time datetime="2023-04-14T05:30:58.000Z">2023-04-14</time></span></div></article>
-</a><a class="post-card post " href="/2023/04/13/%E4%B8%B2%E5%8F%A3%E4%B8%AD%E6%96%AD%E7%A8%8B%E5%BA%8F%E8%A7%A3%E8%AF%BB/">
-<article class="md-text"><div class="post-cover"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://source.unsplash.com/1280x640/?STM32"/></div><h2 class="post-title">4.串口中断程序解读</h2><div class="excerpt"><p>
-IO端口、初始化
-
-123GPIO_InitTypeDef GPIO_InitStructure;//GPIO端口USART_InitTypeDef USART_InitStructure;//串口NVIC_InitTypeDef NVIC_InitStructure;//中断
-
-
-串口及IO端口时钟使能，STM32F103C8芯片中，串口1的的IO端口是A，同时，需要将串口1使能。
-
-1...</p></div><div class="meta cap"><span class="cap" id="post-meta">发布于&nbsp;<time datetime="2023-04-13T12:08:54.000Z">2023-04-13</time></span></div></article>
-</a><a class="post-card post " href="/2023/04/13/%E4%B8%B2%E5%8F%A3%E9%80%9A%E4%BF%A1/">
-<article class="md-text"><div class="post-cover"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://source.unsplash.com/1280x640/?STM32"/></div><h2 class="post-title">3.串口通信初理解</h2><div class="excerpt"><p>串口通信有一下几个步骤
-
-串口时钟使能，GPIO 时钟使能
-
-串口复位
-
-GPIO端口模式设置
-
-串口参数初始化
-
-开启中断并且初始化NVIC（若是中断开发需要设置）
-
-使能串口
-
-编写中断处理函数
-
-
-相关函数
-串口时钟使能，GPIO 时钟使能
-
-1RCC_APB2PeriphClockCmd(RCC_APB2Periph_USART1)；
-
-
-串口复位。当外设出现异常的时复位设置，实现该...</p></div><div class="meta cap"><span class="cap" id="post-meta">发布于&nbsp;<time datetime="2023-04-13T08:57:31.000Z">2023-04-13</time></span></div></article>
-</a><a class="post-card post " href="/2023/04/13/%E6%8C%89%E9%94%AE%E8%BE%93%E5%85%A5/">
-<article class="md-text"><div class="post-cover"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://source.unsplash.com/1280x640/?STM32"/></div><h2 class="post-title">2. 按键输入</h2><div class="excerpt"><p>按键输入使用的是浮空输入。
-key.c
-123456789101112131415161718192021222324252627282930313233343536373839404142#include &quot;key.h&quot;#include &quot;port.h&quot;#define KEY0 GPIO_ReadInputDataBit(GPIOA,GPIO_Pin...</p></div><div class="meta cap"><span class="cap" id="post-meta">发布于&nbsp;<time datetime="2023-04-13T01:03:36.000Z">2023-04-13</time></span></div></article>
-</a><a class="post-card post " href="/2023/04/13/%E7%82%B9%E4%BA%AE%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E4%B8%AALED%E5%B0%8F%E7%81%AF/">
-<article class="md-text"><div class="post-cover"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://source.unsplash.com/1280x640/?STM32"/></div><h2 class="post-title">1. 点亮我的第一个LED小灯</h2><div class="excerpt"><p>123456789101112131415161718192021222324#include &quot;stm32f10x.h&quot;                  // Device header#include &quot;port.h&quot;//位带操作#include &quot;delay.h&quot;//延时函数void led_init()&#123;	GPI...</p></div><div class="meta cap"><span class="cap" id="post-meta">发布于&nbsp;<time datetime="2023-04-13T00:01:11.000Z">2023-04-13</time></span></div></article>
-</a><a class="post-card post " href="/2023/04/13/%E5%A6%82%E4%BD%95%E6%9F%A5%E7%9C%8B%E8%87%AA%E5%B7%B1%E4%BD%BF%E7%94%A8%E7%9A%84%E6%9D%BF%E5%AD%90%E7%9A%84%E6%97%B6%E9%92%9F%E9%A2%91%E7%8E%87/">
-<article class="md-text"><div class="post-cover"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://source.unsplash.com/1280x640/?STM32"/></div><h2 class="post-title">如何查看自己使用的板子的时钟频率</h2><div class="excerpt"><p>注：此文章参照正点原子官方delay函数代码
-如何查看自己板子的时钟频率首先在main函数文件下添加下面的代码：
-12RCC_ClocksTypeDef  get_rcc_clock; RCC_GetClocksFreq(&amp;get_rcc_clock);
-
-main函数中的代码
-1234567891011121314151617181920212223242526#include &...</p></div><div class="meta cap"><span class="cap" id="post-meta">发布于&nbsp;<time datetime="2023-04-12T23:48:55.000Z">2023-04-13</time></span></div></article>
+  <div class="post-list post"><a class="post-card post " href="/2023/04/13/SysTick%E5%BB%B6%E6%97%B6%E5%87%BD%E6%95%B0/">
+<article class="md-text"><div class="post-cover"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://source.unsplash.com/1280x640/?STM32"/></div><h2 class="post-title">delay延时函数</h2><div class="excerpt"><p>注：此文章参照正点原子官方delay函数代码
+delay.c函数
+1234567891011121314151617181920212223242526272829303132333435363738394041424344#include &quot;delay.h&quot;static u8  fac_us=0;							//usÑÓÊ±±¶³ËÊý			   static u16...</p></div><div class="meta cap"><span class="cap" id="post-meta">发布于&nbsp;<time datetime="2023-04-12T23:44:00.000Z">2023-04-13</time></span></div></article>
+</a><a class="post-card post " href="/2023/04/13/%E6%BB%B4%E7%AD%94%E5%AE%9A%E6%97%B6%E5%99%A8/">
+<article class="md-text"><div class="post-cover"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://source.unsplash.com/1280x640/?STM32"/></div><h2 class="post-title">滴答定时器</h2><div class="excerpt"><p>SysTick定时器被捆绑在NVIC中，用于产生SysTick异常（异常号：15）。滴答中断对操作系统尤其重要。
+例如，操作系统可以为多个任务许以不同数目的时间片，确 保没有一个任务能霸占系统；或者把每个定时器周期的某个时间范围赐予特定的任务等，还有操作 系统提供的各种定时功能，都与这个滴答定时器有关。
+因此，需要一个定时器来产生周期性的中断，而且最好还让用户程序不能随意访问它的寄存器，以维...</p></div><div class="meta cap"><span class="cap" id="post-meta">发布于&nbsp;<time datetime="2023-04-12T16:33:34.000Z">2023-04-13</time></span></div></article>
+</a><a class="post-card post " href="/2023/04/12/%E4%BD%8D%E5%B8%A6%E6%93%8D%E4%BD%9C/">
+<article class="md-text"><div class="post-cover"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://source.unsplash.com/1280x640/?STM32"/></div><h2 class="post-title">位带操作</h2><div class="excerpt"><p>根据CSDN一位博主的概述，位带操作是对STM32中的一个比特位进行单独的读写操作，例如在C51单片机中P2_0&#x3D;1；这种操作可以直接对一个IO引脚进行操作。但是在STM32中，这样的操作比较复杂。
+根据官方COR3手册（第五章）描述，对于CM3类型的芯片，有 两个区中实现了位带。其中一个是 SRAM 区的最低 1MB 范围，第二个则是片内外设区的最低 1MB 范 围。这两个位带中...</p></div><div class="meta cap"><span class="cap" id="post-meta">发布于&nbsp;<time datetime="2023-04-12T15:20:41.000Z">2023-04-12</time></span></div></article>
 </a></div>
   
   <div class='paginator-wrap dis-select'>
-  <span class="extend prev" rel="prev"></span><span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/"></a>
+  <a class="extend prev" rel="prev" href="/"></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><span class="extend next" rel="next"></span>
   </div>
 
 
